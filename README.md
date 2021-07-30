@@ -21,4 +21,7 @@ Run mongoDb docker image with configured network
 docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=Pass#word1 --network=mongoDbNetwork mongo
 
 Run REST Api Docker image in configured Network, interaction mode and override the appsettings with env variables.
-docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=Pass#word1 --network=mongoDbNetwork api:v1
+docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=Pass#word1 --network=mongoDbNetwork api:v2
+
+To Stop Running Docker Images
+docker stop $(docker ps -a -q)
