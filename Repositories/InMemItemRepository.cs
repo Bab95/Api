@@ -10,9 +10,6 @@ namespace Api.Repositories
     {
         private readonly List<Item> items = new()
         {
-            new Item() { Id = "321424", StartTime="2:67", Duration = 34, Note="Test note"},
-            
-            new Item() { Id = "321424", StartTime="2:67", Duration = 34, Note="Test note"}
         };
 
         public async Task<IEnumerable<Item>> GetItemsAsync()

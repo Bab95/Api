@@ -12,7 +12,7 @@ namespace Api.Repositories
     {
         private const string databaseName = "catalog";
         private const string collectionName = "items";
-        private const string notesCollection = "notes";
+        private const string notesCollection = "notescollection";
         private readonly IMongoCollection<Item> itemsCollection;
         private readonly FilterDefinitionBuilder<Item> filterBuilder = Builders<Item>.Filter;
         public MongoDbItemRepository(IMongoClient mongoClient)

@@ -9,10 +9,10 @@ namespace Api.Dtos
         public string Id { get; init; }
 
         [Required]
-        public string StartTime { get; set; }
+        public float StartTime { get; set; }
 
         [Required]
-        public int Duration { get; set; }
+        public float Duration { get; set; }
 
         [Required]
         public string Note { set; get; }
