@@ -9,9 +9,7 @@ namespace Api
             return new ItemDto
             {
                 Id = item.Id,
-                StartTime = item.StartTime,
-                Duration = item.Duration,
-                Note = item.Note
+                Notes = item.Notes
             };
         }
     }
