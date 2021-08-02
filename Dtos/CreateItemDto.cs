@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-
+using Api.Entities;
+using System.Collections.Generic;
 namespace Api.Dtos
 {
     public record CreateItemDto
@@ -9,12 +10,6 @@ namespace Api.Dtos
         public string Id { get; init; }
 
         [Required]
-        public float StartTime { get; set; }
-
-        [Required]
-        public float Duration { get; set; }
-
-        [Required]
-        public string Note { set; get; }
+        public List<Note> Notes{get;set;}
     }
 }

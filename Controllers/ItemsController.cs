@@ -7,7 +7,6 @@ using Api.Dtos;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-
 namespace Api.Controllers
 {
     //GET /items
@@ -51,15 +50,26 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult<ItemDto> > CreateItemAsync(CreateItemDto createItemDto)
         {
-            Item item = new()
+            var existingVideo = await repository.GetItemAsync(createItemDto.Id);
+
+            if(existingVideo is null)
             {
-                Id = createItemDto.Id,
-                StartTime = createItemDto.StartTime,
-                Duration = createItemDto.Duration,
-                Note = createItemDto.Note
+                Item item1= new()
+                {
+                    Id = createItemDto.Id,
+                    Notes = createItemDto.Notes
+                };
+                await repository.CreteItemAsync(item1);
+                return CreatedAtAction(nameof(GetItemAsync), new {id = item1.Id}, item1.AsDto());
+            }
+            await repository.DeleteItemAsync(createItemDto.Id);
+            List<Note> NotesList = existingVideo.Notes;
+            NotesList.AddRange(createItemDto.Notes);
+            Item updatedNotesObject = existingVideo with {
+                Notes = NotesList
             };
-            await repository.CreteItemAsync(item);
-            return CreatedAtAction(nameof(GetItemAsync), new {id = item.Id}, item.AsDto());
+            await repository.CreteItemAsync(updatedNotesObject);
+            return CreatedAtAction(nameof(GetItemAsync), new {id = updatedNotesObject.Id}, updatedNotesObject.AsDto());
         }
 
         //PUT /items/id
@@ -71,12 +81,15 @@ namespace Api.Controllers
             {
                 return NotFound();
             }
-            Item updatedItem = existingItem with {
-                StartTime = updateItemDto.StartTime,
-                Duration = updateItemDto.Duration,
-                Note = updateItemDto.Note
+            /*
+                todo:
+                won't work properly need to write may be need to change routing as
+                we want to update {id/noteid} or somehow pass note in the method and get and update
+                in the list...
+                            */
+            Item updatedItem = existingItem with{
+                Notes = updateItemDto.Notes
             };
-
             await repository.UpdateItemAsync(updatedItem);
             return NoContent();
         }
